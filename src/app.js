@@ -2,11 +2,27 @@
 
 const http = require('http');
 
-const requestParser = require('./lib/parse-request');
+const router = require('./lib/router.js');
+const api = require('./lib/api.js');
+let isRunning = false;
 
-const bodyParser = require('./lib/parse-body');
+const app = http.createServer(router.route);
 
-const requestHandler = (req, res) => {
+module.exports = {
+  start: (port) => {
+    if(! isRunning) {
+      app.listen(port, (err) => {
+        if(err) { throw err; }
+        isRunning = true;
+        console.log('Server is up on port', port);
+      });
+    }
+    else {
+      console.log('Server is already running');
+    }
+  },
 
-    
-}
+  stop: () => {
+    console.log('Not implemented');
+  },
+};
